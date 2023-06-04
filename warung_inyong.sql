@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2019 at 07:01 PM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.2.0
+-- Generation Time: Jun 04, 2023 at 11:38 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `edel`
+-- Database: `warung_inyong`
 --
 
 -- --------------------------------------------------------
@@ -33,7 +32,7 @@ CREATE TABLE `admin` (
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `nama_lengkap` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
@@ -52,7 +51,7 @@ CREATE TABLE `likes` (
   `id_likes` int(11) NOT NULL,
   `id_pelanggan` int(11) NOT NULL,
   `id_produk` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -68,14 +67,14 @@ CREATE TABLE `pelanggan` (
   `telepon_pelanggan` varchar(15) DEFAULT NULL,
   `alamat_pelanggan` varchar(100) NOT NULL,
   `foto_profil` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`id_pelanggan`, `email_pelanggan`, `password_pelanggan`, `nama_pelanggan`, `telepon_pelanggan`, `alamat_pelanggan`, `foto_profil`) VALUES
-(4, 'baskoro.baskoro.adi5@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'Baskoro Adi Wicaksono', '085325633101', 'Asrama Putra Telkom University, Bandung, Jawa Barat', '4.jpg');
+(4, 'Afist.ganteng69@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'Hamba Allah', '085325633101', 'Cilacap, Jawa di Tengah', '4.jpg');
 
 -- --------------------------------------------------------
 
@@ -90,7 +89,15 @@ CREATE TABLE `pembelian` (
   `ongkir` int(11) NOT NULL,
   `total_pembelian` int(11) DEFAULT NULL,
   `id_pelanggan` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `pembelian`
+--
+
+INSERT INTO `pembelian` (`id_pembelian`, `tanggal_pembelian`, `jumlah_pembelian`, `ongkir`, `total_pembelian`, `id_pelanggan`) VALUES
+(28, '2023-06-04', 15000, 1000, 16000, 4),
+(29, '2023-06-04', 20000, 1000, 21000, 4);
 
 -- --------------------------------------------------------
 
@@ -103,7 +110,15 @@ CREATE TABLE `pembelian_produk` (
   `jumlah` int(11) DEFAULT NULL,
   `id_pembelian` int(11) DEFAULT NULL,
   `id_produk` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `pembelian_produk`
+--
+
+INSERT INTO `pembelian_produk` (`id_pembelian_produk`, `jumlah`, `id_pembelian`, `id_produk`) VALUES
+(33, 1, 28, 1),
+(34, 1, 29, 3);
 
 -- --------------------------------------------------------
 
@@ -117,19 +132,19 @@ CREATE TABLE `produk` (
   `harga_produk` int(11) DEFAULT NULL,
   `stok` int(11) DEFAULT NULL,
   `foto_produk` varchar(100) DEFAULT NULL,
-  `deskripsi_produk` text,
+  `deskripsi_produk` text DEFAULT NULL,
   `likes` int(11) NOT NULL,
   `id_warung` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `produk`
 --
 
 INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga_produk`, `stok`, `foto_produk`, `deskripsi_produk`, `likes`, `id_warung`) VALUES
-(1, 'Nasi Goreng', 15000, 4, '7.jpg', 'Nasi Goreng enak dengan campuran telor, sosis, baso, ayam', 2, 1),
+(1, 'Nasi Goreng', 15000, 3, '7.jpg', 'Nasi Goreng enak dengan campuran telor, sosis, baso, ayam', 2, 1),
 (2, 'Bakso', 10000, 2, '9.jpg', 'Bakso yang terbuat dari daging sapi berkualitas dan halal, dijamin sehat', 1, 2),
-(3, 'Ayam Goreng', 20000, 10, '6.jpg', 'Menggunakan daging segar yang sehat dan lezzat', 1, 3),
+(3, 'Ayam Goreng', 20000, 9, '6.jpg', 'Menggunakan daging segar yang sehat dan lezzat', 1, 3),
 (4, 'Es Teh', 5000, 0, '11.jpg', 'Teh segar pengobat dahaga', 2, 3),
 (5, 'Soto Ayam', 12000, 16, '5.jpg', 'Menu soto yang dicampur dengan ayam dan telor', 3, 1),
 (6, 'Es Jeruk', 4000, 16, '12.jpg', 'Terbuat dari jeruk alami yang sehat dan manis', 2, 1),
@@ -151,7 +166,7 @@ CREATE TABLE `warung` (
   `nama_warung` varchar(50) DEFAULT NULL,
   `alamat_warung` varchar(100) NOT NULL,
   `telepon_warung` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `warung`
@@ -240,13 +255,13 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `id_pembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_pembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `pembelian_produk`
 --
 ALTER TABLE `pembelian_produk`
-  MODIFY `id_pembelian_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_pembelian_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `produk`

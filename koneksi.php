@@ -1,3 +1,3 @@
 <?php 
-	$conn= new mysqli('localhost','root','','baksoUWU');
+	$conn= new mysqli('localhost','root','','warung_inyong');
 ?>
